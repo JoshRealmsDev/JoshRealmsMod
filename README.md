@@ -1,0 +1,3 @@
+# JoshRealmMod #
+
+JoshRealmMod is a modified version of [TotalFreedomMod](https://github.com/TotalFreedom/TotalFreedomMod), this plugin is made for the [JoshRealm Server](http://joshrealms.icyboards.net/index.php). This plugin was originally coded by StevenLawson (Madgeek1450), with Jerom van der Sar (DarthSalamon) becoming heavily involved in its development some time later. Then modified by kwteh and camzie99 for the [JoshRealm Server](http://joshrealms.icyboards.net/index.php).
