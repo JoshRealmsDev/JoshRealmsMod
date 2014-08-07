@@ -9,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 
 @CommandPermissions(level = AdminLevel.SUPER, source = SourceType.BOTH)
 @CommandParameters(description = "Toggles TotalFreedomMod settings", usage = "/<command> [option] [value] [value]")
@@ -33,7 +32,7 @@ public class Command_toggle extends TFM_Command
             playerMsg("- droptoggle");
             playerMsg("- nonuke");
             playerMsg("- explosives");
-            playerMsg("- disguisecraft");
+            playerMsg("- adminworld");
             return false;
         }
 
@@ -57,7 +56,7 @@ public class Command_toggle extends TFM_Command
 
         if (args[0].equals("fluidspread"))
         {
-            toggle("Fire placement is", TFM_ConfigEntry.ALLOW_FLUID_SPREAD);
+            toggle("Fluid spread is", TFM_ConfigEntry.ALLOW_FLUID_SPREAD);
             return true;
         }
 
@@ -69,8 +68,8 @@ public class Command_toggle extends TFM_Command
 
         if (args[0].equals("firespread"))
         {
-            TFM_GameRuleHandler.setGameRule(TFM_GameRule.DO_FIRE_TICK, TFM_ConfigEntry.ALLOW_FIRE_SPREAD.getBoolean());
             toggle("Fire spread is", TFM_ConfigEntry.ALLOW_FIRE_SPREAD);
+            TFM_GameRuleHandler.setGameRule(TFM_GameRule.DO_FIRE_TICK, TFM_ConfigEntry.ALLOW_FIRE_SPREAD.getBoolean());
             return true;
         }
 
@@ -96,6 +95,12 @@ public class Command_toggle extends TFM_Command
         if (args[0].equals("droptoggle"))
         {
             toggle("Automatic entity wiping is", TFM_ConfigEntry.AUTO_ENTITY_WIPE);
+            return true;
+        }
+        
+        if (args[0].equals("adminworld"))
+        {
+            toggle("Adminworld is", TFM_ConfigEntry.ENABLE_ADMINWORLD);
             return true;
         }
 
@@ -148,7 +153,6 @@ public class Command_toggle extends TFM_Command
                 }
             }
 
-
             toggle("Explosions are", TFM_ConfigEntry.ALLOW_EXPLOSIONS);
 
             if (TFM_ConfigEntry.ALLOW_EXPLOSIONS.getBoolean())
@@ -158,36 +162,11 @@ public class Command_toggle extends TFM_Command
             return true;
         }
 
-        if (args[0].equals("disguisecraft"))
-        {
-            final Plugin disguiseCraft = server.getPluginManager().getPlugin("DisguiseCraft");
-            if (disguiseCraft == null)
-            {
-                playerMsg("DisguiseCraft is not installed on this server.");
-                return true;
-            }
-
-            boolean enabled = disguiseCraft.isEnabled();
-            TFM_Util.adminAction(sender.getName(), (enabled ? "disa" : "ena") + "bling DisguiseCraft", true);
-
-
-            if (enabled)
-            {
-                plugin.getServer().getPluginManager().disablePlugin(disguiseCraft);
-            }
-            else
-            {
-                plugin.getServer().getPluginManager().enablePlugin(disguiseCraft);
-            }
-            return true;
-        }
-
         return false;
     }
 
     private void toggle(String name, TFM_ConfigEntry entry)
     {
-        entry.setBoolean(!entry.getBoolean());
         playerMsg(name + " now " + (entry.setBoolean(!entry.getBoolean()) ? "enabled." : "disabled."));
     }
 }
