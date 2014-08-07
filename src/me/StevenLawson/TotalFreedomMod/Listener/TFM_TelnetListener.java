@@ -5,8 +5,8 @@ import me.StevenLawson.BukkitTelnet.api.TelnetPreLoginEvent;
 import me.StevenLawson.TotalFreedomMod.TFM_CommandBlocker;
 import me.StevenLawson.TotalFreedomMod.TFM_Admin;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import me.StevenLawson.TotalFreedomMod.TFM_Util;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -30,22 +30,14 @@ public class TFM_TelnetListener implements Listener
             return;
         }
 
-        event.setBypassPassword(true);
-        event.setName(admin.getLastLoginName());
-
-        final OfflinePlayer player = Bukkit.getOfflinePlayer(admin.getLastLoginName());
-        if (player == null)
-        {
-            return;
-        }
-
-        event.setName(player.getName());
+        event.setBypassPassword(true)
+        TFM_Util.adminAction(admin.getLastLoginName(), ChatColor.GREEN + "Connected via BukkitTelnet", true);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onTelnetCommand(TelnetCommandEvent event)
     {
-        if (TFM_CommandBlocker.getInstance().isCommandBlocked(event.getCommand(), event.getSender()))
+        if (TFM_CommandBlocker.isCommandBlocked(event.getCommand(), event.getSender()))
         {
             event.setCancelled(true);
         }
