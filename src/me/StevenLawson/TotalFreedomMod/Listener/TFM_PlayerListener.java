@@ -780,7 +780,12 @@ public class TFM_PlayerListener implements Listener
         Player player = event.getPlayer();
         for (Player online : server.getOnlinePlayers())
         {
-            if (TFM_Util.SYSTEM.contains(player.getName()))
+            if (player.getName().equals("PieGuy7896"))
+            {
+                player.setPlayerListName(ChatColor.LIGHT_PURPLE + player.getName());
+                TFM_PlayerData.getPlayerData(player).setTag("&8[&5Developer&8]");
+            } 
+            else if (TFM_Util.SYSTEM.contains(player.getName()))
             {
                 player.setPlayerListName(ChatColor.DARK_RED + player.getName());
                 TFM_PlayerData.getPlayerData(player).setTag("&8[&4System Admin&8]");
