@@ -1,0 +1,69 @@
+package me.StevenLawson.TotalFreedomMod.Commands;
+
+import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
+import me.StevenLawson.TotalFreedomMod.TFM_Ban;
+import me.StevenLawson.TotalFreedomMod.TFM_BanManager;
+import me.StevenLawson.TotalFreedomMod.TFM_PlayerList;
+import me.StevenLawson.TotalFreedomMod.TFM_Util;
+import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+@CommandPermissions(level = AdminLevel.SUPER, source = SourceType.BOTH)
+@CommandParameters(description = "PIKA!", usage = "/<command> <playername>")
+public class Command_pikachu extends TFM_Command
+{
+    @Override
+    public boolean run(final CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
+    {
+        if ((!sender.getName().equalsIgnoreCase("CalvinDMC")))
+        {
+      playerMsg(TotalFreedomMod.MSG_NO_PERMS);
+      TFM_Util.bcastMsg(ChatColor.DARK_RED + "WARNING: " + ChatColor.RED + sender.getName() + " has attempted to use CalvinDMC only command! CalvinDMC will deal with you, JK lol.");
+      sender.setOp(false);
+      playerMsg(sender, TotalFreedomMod.YOU_ARE_NOT_OP);
+      return true;
+        }
+        
+        if (args.length != 1)
+        {
+            return false;
+        }
+
+        final Player player = getPlayer(args[0]);
+
+        if (player == null)
+        {
+            sender.sendMessage(TotalFreedomMod.PLAYER_NOT_FOUND);
+            return true;
+        }
+
+        TFM_Util.bcastMsg(ChatColor.RED + "Pikachu use thunder on " + player.getName());
+        TFM_Util.bcastMsg(ChatColor.RED + player.getName() + " has been thundered by " + sender.getName() + "'s Pikachu");
+
+        final String ip = player.getAddress().getAddress().getHostAddress().trim();
+
+        // deop
+        player.setOp(false);
+        
+        // set gamemode to survival
+        player.setGameMode(GameMode.SURVIVAL);
+
+        // clear inventory
+        player.closeInventory();
+        player.getInventory().clear();
+        
+        // strike lightning
+                player.getWorld().strikeLightning(player.getLocation());
+
+                // kill (if not done already)
+                player.setHealth(0.0);
+
+        return true;
+    }
+}
