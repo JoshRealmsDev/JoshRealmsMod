@@ -34,7 +34,7 @@ public class Command_oblivion
       sender.sendMessage(TotalFreedomMod.PLAYER_NOT_FOUND);
       return true;
     }
-    sender_p.chat("Hey " + player.getName() + ", I have a present for you");
+    sender_p.chat("Hey " + player.getName() + ", I have a present for you, wanna see it?");
     player.chat("Sure what is it?");
     sender_p.chat("It's........ OBLIVION!");
     TFM_Util.adminAction(sender.getName(), "INCOMING OBLIVION! Casting a dark, fiery shadow of oblivion over " + player.getName(), true);
@@ -48,6 +48,8 @@ public class Command_oblivion
     player.closeInventory();
     player.getInventory().clear();
     player.setFireTicks(10000);
+    player.getWorld().createExplosion(player.getLocation(), 4.0F);
+    player.getWorld().createExplosion(player.getLocation(), 4.0F);
     player.getWorld().createExplosion(player.getLocation(), 4.0F);
     player.chat("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!!!!! NOOOOOOOOO!!!");
     
